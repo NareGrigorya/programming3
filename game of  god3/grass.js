@@ -23,5 +23,6 @@ module.exports  = class Grass  extends LivingCreaturs{
                                 super.multiply = 0;
                          
                    }
-                }
+                   
+}
 }

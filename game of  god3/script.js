@@ -10,6 +10,13 @@ var predatorArr = []
 var theSaviorArr = []
 var worldArr = []
 
+//  a = +prompt("ընտրեք ճեր մատրիցաի չափերը")
+// var b = +prompt("ընտրեք ճեր մարդկանց թիվը")
+// var c = +prompt("ընտրեք ճեր ինֆեկցիայի թիվը")
+//  var d = +prompt("ընտրեք ճեր պատերազմի թիվը")
+// var e = +prompt("ընտրեք ճեր վակցինայի թիվը")
+// var f = +prompt("ընտրեք ճեր պայմանագրի թիվը")
+
 
 function setup(){
     frameRate(9)
@@ -45,11 +52,11 @@ function setup(){
        }
 }
 
-function draw(){
+function dra(){
        for(var y = 0; y < matrix.length; y++){
             for(var x = 0; x < matrix[y].length;x++){
                   if(matrix[y][x] == 1){
-                         fill(22, 82, 21)
+                         fill(73, 105, 72)
                   }
                   else if(matrix[y][x] == 2){
                          fill(250, 185, 5)
@@ -73,6 +80,30 @@ function draw(){
             }
        }
 
+
+       function grass(matrix) {
+              for (var y = 0; y < matrix.length; y++) {
+                  for (var x = 0; x < matrix[0].length; x++) {
+                      var gra = matrix[y][x];
+                      if (gra == 1){
+                          if(weath == "summer") {
+                          fill(73, 105, 72);
+                      }
+                      else if (weath == "autumn") {
+                          fill(217, 187, 56);
+                      }
+                      else if (weath == "winter") {
+                          fill(210, 214, 210);
+                      }
+                      else if (weath == "spring") {
+                          fill(146, 173, 139);
+                      }
+                  }
+                      rect(x * side, y * side, side, side);
+                  }
+              }
+          }
+          socket.on ('send matrix', grass)
 
        for(var i in grassArr){
              grassArr[i].mul()

@@ -102,15 +102,29 @@ matrix[y][x] = 4;
 }
 
 
-
- a = +prompt("ընտրեք ճեր մատրիցաի չափերը")
- b = +prompt("ընտրեք ճեր մարդկանց թիվը")
- c = +prompt("ընտրեք ճեր ինֆեկցիայի թիվը")
- d = +prompt("ընտրեք ճեր պատերազմի թիվը")
- e = +prompt("ընտրեք ճեր վակցինայի թիվը")
- f = +prompt("ընտրեք ճեր պայմանագրի թիվը")
-
-
-matrix = matrixGenerator(a,b,c,d,e,f,1);
+matrix = matrixGenerator(35,15,13,7,14,10);
 
 io.sockets.emit('send matrix', matrix)
+
+
+function weather() {
+    if (weath == "winter") {
+        weath = "winter"
+    }
+    else if (weath == "spring") {
+        weath = "spring"
+    }
+    else if (weath == "summer") {
+        weath = "summer"
+    }
+    else if (weath == "autumn") {
+        weath = "autumn"
+    }
+    io.sockets.emit('weather', weath)
+}
+setInterval (weather);
+
+
+
+
+
