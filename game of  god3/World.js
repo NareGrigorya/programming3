@@ -1,5 +1,5 @@
-let LivingCreaturs = require("./LivingCreaturs")
-module.exports  = class World extends LivingCreaturs{
+let LivingCreature = require("./LivingCreature")
+module.exports  = class World extends LivingCreature{
     constructor(x, y) {
         super(x,y);
         this.x = x;
@@ -16,7 +16,7 @@ module.exports  = class World extends LivingCreaturs{
 mul() {
     this.multiply++;
     var emptyCell  =  super.chooseCell(0);
-    var newCell  =  emptyCell[Math.floor(Math.random()* emptyCells.length)];
+    var newCell  =  emptyCell[Math.floor(Math.random()* emptyCell.length)];
 
     // console.log(emptyCells);
     if (newCell && this.multiply >= 15) {
@@ -33,7 +33,7 @@ mul() {
 move() {
     this.energy--
     var emptyCell  =  super.chooseCell(0);
-    var newCell  =  emptyCell[Math.floor(Math.random()* emptyCells.length)];
+    var newCell  =  emptyCell[Math.floor(Math.random()* emptyCell.length)];
 
     if (newCell && this.energy >= 0) {
         // console.log(newCell)
@@ -53,8 +53,8 @@ move() {
 
 
 eat() {
-    var emptyCells = this.chooseCell(2,3)
-    var newCell  =  emptyCell[Math.floor(Math.random()* emptyCells.length)];
+    var emptyCell = this.chooseCell(2,3)
+    var newCell  =  emptyCell[Math.floor(Math.random()* emptyCell.length)];
 
     if (newCell) {
         this.energy++

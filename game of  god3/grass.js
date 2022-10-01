@@ -1,13 +1,17 @@
-let LivingCreaturs = require("./LivingCreaturs")
+let LivingCreature = require("./LivingCreature")
 
-module.exports  = class Grass  extends LivingCreaturs{
+module.exports  = class Grass  extends LivingCreature{
 
+      constructor(x, y) {
     
+           super(x,y)
+          
+        }
       mul(){
 
-            super.multiply++
-             var emptyCell  =  super.chooseCell(0);
-             var newCell  =  emptyCell[Math.floor(Math.random()* emptyCells.length)];
+            this.multiply++
+             var emptyCell  =  this.chooseCell(0);
+             var newCell  =  emptyCell[Math.floor(Math.random()* emptyCell.length)];
 
                    if(newCell && this.multiply >= 5){
                           
@@ -20,7 +24,7 @@ module.exports  = class Grass  extends LivingCreaturs{
 
                                 grassArr.push(gr);
 
-                                super.multiply = 0;
+                                this.multiply = 0;
                          
                    }
                    

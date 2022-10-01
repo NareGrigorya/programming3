@@ -4,6 +4,10 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 var fs = require("fs");
+const GrassEater = require('./grassEater');
+const Predator = require('./Predator');
+const TheSavior = require('./TheSavior');
+const World = require('./World');
 
 app.use(express.static("."));
 
@@ -102,27 +106,114 @@ matrix[y][x] = 4;
 }
 
 
-matrix = matrixGenerator(35,15,13,7,14,10);
+matrix = matrixGenerator(25,5,5,10,14,17);
 
 io.sockets.emit('send matrix', matrix)
 
 
-function weather() {
-    if (weath == "winter") {
-        weath = "winter"
-    }
-    else if (weath == "spring") {
-        weath = "spring"
-    }
-    else if (weath == "summer") {
-        weath = "summer"
-    }
-    else if (weath == "autumn") {
-        weath = "autumn"
-    }
-    io.sockets.emit('weather', weath)
-}
-setInterval (weather);
+ grassArr = []
+ grassEaterArr = []
+ predatorArr = []
+ theSaviorArr = []
+ worldArr = []
+
+ Grass = require("./grass")
+ GrassEat = require("./grassEater")
+ Predat  = require("./Predator")
+ TheSavi = require("./TheSavior")
+ World1 = require("./World")
+
+
+ function createObject(){
+    for(var y = 0 ; y < matrix.length ;y++){
+        for(var x = 0; x < matrix[y].length;x++){
+                       if(matrix[y][x] == 1){
+                            var gr = new Grass(x,y,false)
+
+                            grassArr.push(gr)
+                       }
+                       else  if(matrix[y][x] == 2){
+                          var grEat = new GrassEater(x,y,false)
+
+                          grassEaterArr.push(grEat)
+                     }
+                     else  if(matrix[y][x] == 3){
+                          var pre = new Predator(x,y,false)
+
+                          predatorArr.push(pre)
+                     }
+                    else  if(matrix[y][x] == 4){
+                          var savi = new TheSavior(x,y,false)
+
+                          theSaviorArr.push(savi)
+                     }
+                    else  if(matrix[y][x] == 5){
+                          var wor = new World(x,y)
+
+                          worldArr.push(wor)
+                     }
+        }
+   }
+
+io.sockets.emit('send matrix', matrix)
+
+ }
+
+
+ function game(){
+    for(var i in grassArr){
+        grassArr[i].mul()
+  }
+
+  for (let j in grassEaterArr) {
+     grassEaterArr[j].mul()
+     grassEaterArr[j].eat()
+ }
+
+ for (let j in predatorArr) {
+     predatorArr[j].mul()
+     predatorArr[j].eat()
+ }
+
+ for (let j in theSaviorArr) {
+     theSaviorArr[j].mul()
+     theSaviorArr[j].eat()
+ }
+
+ for (let j in worldArr) {
+     worldArr[j].mul()
+     worldArr[j].eat()
+ }     
+io.sockets.emit('send matrix', matrix)
+
+ }
+
+setInterval(game,200)
+
+
+
+
+io.on("connection", (socket) => {
+     createObject(matrix)
+    
+})
+
+// function weather() {
+//     if (weath == "winter") {
+//         weath = "winter"
+//     }
+//     else if (weath == "spring") {
+//         weath = "spring"
+//     }
+//     else if (weath == "summer") {
+//         weath = "summer"
+//     }
+//     else if (weath == "autumn") {
+//         weath = "autumn"
+//     }
+//     io.sockets.emit('weather', weath)
+// }
+// setInterval (weather);
 
 
 
