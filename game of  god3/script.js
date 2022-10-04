@@ -44,6 +44,7 @@ function dra(matrix){
                   else {
                         fill("gray")
                      }
+                     
                      rect(x  * side ,y * side , side , side)
             }
        }
@@ -90,8 +91,64 @@ function summer () {
 function autumn () {
     document.body.style.backgroundImage = "url('fal.webp')"
 }
-function lightning () {
-    
-}
+function lightning() {
+       circle(60, 60, 60);
+       fill(103, 98, 156);
+       // let id = null;
+       const elem = document.getElementById("Lightning");  
+       // let pos = 70;
+       // clearInterval(id);
+       // id = setInterval(frame, 5);
+       // function frame() {
+       // if (pos == 980) {
+       //     clearInterval(id);
+       // }
+       //    else {
+       //     pos++;
+       //     elem.style.top = pos + "px";
+       //     elem.style.left = pos + "px";
+       // }
+       // }
+     
+              var emptyCell = this.chooseCell(1,2,3,4,5,6)
+              var newCell  =  emptyCell[Math.floor(Math.random()* emptyCell.length)];
+          
+              if (newCell) {
+                  let newX = newCell[0]
+                  let newY = newCell[1]
+                  matrix[newY][newX] = matrix[this.y][this.x]
+                  matrix[this.y][this.x] = 0
+                  this.x = newX
+                  this.y = newY
+                  for (var i in predatorArr) {
+                      if (newX == grassArr[i].x && newY == grassArr[i].y) {
+                            grassArr.splice(i, 1)
+                          break
+                      }
+                      if (newX == grassEaterArr[i].x && newY == grassEaterArr[i].y) {
+                            grassEaterArr.splice(i, 1)
+                            break
+                        }
+                      if (newX == predatorArr[i].x && newY == predatorArr[i].y) {
+                            predatorArr.splice(i, 1)
+                            break
+                        }
+                      if (newX ==  theSaviorArr[i].x && newY ==  theSaviorArr[i].y) {
+                            theSaviorArr.splice(i, 1)
+                            break
+                        }
+                      if (newX ==  worldArr[i].x && newY ==  worldArr[i].y) {
+                            worldArr.splice(i, 1)
+                            break
+                        }
+                  }
+              }
+          
+              else {
+                  this.move()
+              }
+          
+     }
+ 
 socket.on('send matrix', dra)
 
