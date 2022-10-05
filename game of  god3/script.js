@@ -48,36 +48,10 @@ function dra(matrix){
                      rect(x  * side ,y * side , side , side)
             }
        }
-
-
-    //    function grass(matrix) {
-    //           for (var y = 0; y < matrix.length; y++) {
-    //               for (var x = 0; x < matrix[0].length; x++) {
-    //                   var gra = matrix[y][x];
-    //                   if (gra == 1){
-    //                       if(weath == "summer") {
-    //                       fill(73, 105, 72);
-    //                   }
-    //                   else if (weath == "autumn") {
-    //                       fill(217, 187, 56);
-    //                   }
-    //                   else if (weath == "winter") {
-    //                       fill(210, 214, 210);
-    //                   }
-    //                   else if (weath == "spring") {
-    //                       fill(146, 173, 139);
-    //                   }
-    //               }
-    //                   rect(x * side, y * side, side, side);
-    //               }
-    //           }
-    //       }
-    //       socket.on ('send matrix', grass)
-
    
 }
 
-//  body = document.getElementsByTagName("body")
+
 
 function winter () {
     document.body.style.backgroundImage = "url('wint.webp')";
@@ -91,25 +65,17 @@ function summer () {
 function autumn () {
     document.body.style.backgroundImage = "url('fal.webp')"
 }
-function lightning() {
+function lightning() {      
+       fill(93, 133, 143);
        circle(60, 60, 60);
-       fill(103, 98, 156);
-       // let id = null;
-       const elem = document.getElementById("Lightning");  
-       // let pos = 70;
-       // clearInterval(id);
-       // id = setInterval(frame, 5);
-       // function frame() {
-       // if (pos == 980) {
-       //     clearInterval(id);
-       // }
-       //    else {
-       //     pos++;
-       //     elem.style.top = pos + "px";
-       //     elem.style.left = pos + "px";
-       // }
-       // }
-     
+       const elem = document.getElementById("Lightning");    
+       function constructor(x, y) {
+        this.x = x;
+        this.y = y
+        this.multiply = 0
+        this.directions = [];
+
+         function  eat() {
               var emptyCell = this.chooseCell(1,2,3,4,5,6)
               var newCell  =  emptyCell[Math.floor(Math.random()* emptyCell.length)];
           
@@ -147,6 +113,49 @@ function lightning() {
               else {
                   this.move()
               }
+            }
+                this.directions = [
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+                    [this.x + 1, this.y + 1],
+
+                ];
+            }
+            function chooseCell(char) {
+                this.getNewCoordinates()
+                var found = [];
+                for (var i in this.directions) {
+                    var x = this.directions[i][0];
+                    var y = this.directions[i][1];
+                    if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
+        
+                        if (matrix[y][x] == char) {
+                            found.push(this.directions[i]);
+                        }
+                    }
+                }
+                return found;
+            }
           
      }
  

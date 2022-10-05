@@ -84,18 +84,6 @@ function matrixGenerator(matrixSize,grassCount,grEatCount,predatorCount,theSavio
                }
       }
 
-
-        for(let i = 0; i < healingCount; i++){
-  let x = Math.floor(Math.random() * matrixSize)
-  let y = Math.floor(Math.random() * matrixSize)
-
-  if(matrix[y][x] == 0){
-      matrix[y][x] = 6;
-  }else{
-      i--;
-  }
-}
-
 let x = Math.floor(Math.random() * matrixSize)
 let y = Math.floor(Math.random() * matrixSize)
 
@@ -106,7 +94,7 @@ matrix[y][x] = 4;
 }
 
 
-matrix = matrixGenerator(25,5,5,10,14,17);
+matrix = matrixGenerator(25,5,5,10,14,17,1);
 
 io.sockets.emit('send matrix', matrix)
 
@@ -116,6 +104,7 @@ io.sockets.emit('send matrix', matrix)
  predatorArr = []
  theSaviorArr = []
  worldArr = []
+ lightningArr = []
 
  Grass = require("./grass")
  GrassEat = require("./grassEater")
@@ -197,23 +186,6 @@ io.on("connection", (socket) => {
      createObject(matrix)
     
 })
-
-// function weather() {
-//     if (weath == "winter") {
-//         weath = "winter"
-//     }
-//     else if (weath == "spring") {
-//         weath = "spring"
-//     }
-//     else if (weath == "summer") {
-//         weath = "summer"
-//     }
-//     else if (weath == "autumn") {
-//         weath = "autumn"
-//     }
-//     io.sockets.emit('weather', weath)
-// }
-// setInterval (weather);
 
 
 
