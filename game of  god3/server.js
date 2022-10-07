@@ -4,10 +4,12 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 var fs = require("fs");
-const GrassEater = require('./grassEater');
-const Predator = require('./Predator');
-const TheSavior = require('./TheSavior');
-const World = require('./World');
+const AllEater = require('./allEater');
+const TheSavior = require('./theSavior');
+// const GrassEater = require('./grassEater');
+// const Predator = require('./Predator');
+// const TheSavior = require('./TheSavior');
+// const World = require('./World');
 
 app.use(express.static("."));
 
@@ -21,7 +23,7 @@ server.listen(3000, () => {
 
 
 
-function matrixGenerator(matrixSize,grassCount,grEatCount,predatorCount,theSaviorCount,worldCount,healingCount){
+function matrixGenerator(matrixSize,grassCount,grEatCount,predatorCount,theSaviorCount,worldCount,allEaterCount){
     let matrix = [];
 
       for(let i = 0; i < matrixSize;i++){
@@ -84,6 +86,16 @@ function matrixGenerator(matrixSize,grassCount,grEatCount,predatorCount,theSavio
                }
       }
 
+      for(let i = 0 ; i < allEaterCount; i++ ){
+            
+        let x  = Math.floor(Math.random() * matrixSize)
+        let y  = Math.floor(Math.random() * matrixSize)
+
+              if(matrix[y][x] == 0){
+                  matrix[y][x] = 6;
+              }
+     }
+
 let x = Math.floor(Math.random() * matrixSize)
 let y = Math.floor(Math.random() * matrixSize)
 
@@ -94,7 +106,7 @@ matrix[y][x] = 4;
 }
 
 
-matrix = matrixGenerator(25,5,5,10,14,17,1);
+matrix = matrixGenerator(25,3,15,13,14,18);
 
 io.sockets.emit('send matrix', matrix)
 
@@ -104,16 +116,17 @@ io.sockets.emit('send matrix', matrix)
  predatorArr = []
  theSaviorArr = []
  worldArr = []
- lightningArr = []
+ allEaterArr = []
 
  Grass = require("./grass")
- GrassEat = require("./grassEater")
- Predat  = require("./Predator")
- TheSavi = require("./TheSavior")
- World1 = require("./World")
+ GrassEater = require("./grassEater")
+ Predator  = require("./predator")
+ TheSavior1 = require("./theSavior")
+ World = require("./world")
+ allEater = require("./allEater")
 
 
- function createObject(){
+ function createObject(matrix){
     for(var y = 0 ; y < matrix.length ;y++){
         for(var x = 0; x < matrix[y].length;x++){
                        if(matrix[y][x] == 1){
@@ -141,6 +154,11 @@ io.sockets.emit('send matrix', matrix)
 
                           worldArr.push(wor)
                      }
+                     else  if(matrix[y][x] == 6){
+                        var all = new allEater(x,y)
+
+                        allEaterArr.push(all)
+                   }
         }
    }
 
@@ -148,6 +166,11 @@ io.sockets.emit('send matrix', matrix)
 
  }
 
+ function lighting() {  
+    console.log("LOOOOOOOOOG");   
+    lighter = new AllEater(0,0);
+    intval = setInterval(()=>{lighter.move(intval)},1000);       
+}
 
  function game(){
     for(var i in grassArr){
@@ -172,7 +195,12 @@ io.sockets.emit('send matrix', matrix)
  for (let j in worldArr) {
      worldArr[j].mul()
      worldArr[j].eat()
- }     
+ }    
+ 
+ for (let j in allEaterArr) {
+    allEaterArr[j].mul()
+    allEaterArr[j].eat()
+} 
 io.sockets.emit('send matrix', matrix)
 
  }
@@ -184,7 +212,9 @@ setInterval(game,200)
 
 io.on("connection", (socket) => {
      createObject(matrix)
-    
+     socket.on("lighting", (socket) => {
+        lighting();
+    })
 })
 
 
